@@ -93,7 +93,7 @@ function setup() {
   let buttonY = 20;
 
   playButton = createButton("开始 - PLAY");
-  playButton.position(windowWidth - 150, buttonY);
+  playButton.position(windowWidth/2, buttonY);
   playButton.mouseClicked(togglePlay);
   buttonY += 40;
 
@@ -114,7 +114,6 @@ function setup() {
   clearButton.position(windowWidth - 150, buttonY);
   clearButton.mouseClicked(clearPattern);
 
-  // 隐藏除 startButton 外的所有按钮
   playButton.hide();
   tempoButtons.forEach((b) => b.hide());
   randomPatternButton.hide();
@@ -140,9 +139,9 @@ function setup() {
   }, 100);
 
   startButton = createButton("Click to Start");
-  startButton.position(windowWidth / 2, windowHeight / 1.5);
   startButton.style("font-size", "24px");
   startButton.style("padding", "20px 40px");
+  centerButton();
   startButton.mousePressed(() => {
     hasStarted = true;
     startButton.hide();
@@ -157,6 +156,12 @@ function setup() {
     randomPatternButton.show();
     clearButton.show();
   });
+}
+
+function centerButton() {
+  const bw = startButton.elt.offsetWidth;
+  const bh = startButton.elt.offsetHeight;
+  startButton.position(windowWidth / 2 - bw / 2, windowHeight / 1.8 - bh / 2);
 }
 
 function draw() {
@@ -582,6 +587,7 @@ function updateCanvasSize() {
 }
 
 function repositionButtons() {
+  if (!hasStarted) centerButton();
   let buttonY = 20;
   playButton.position(windowWidth - 150, buttonY);
   buttonY += 40;
